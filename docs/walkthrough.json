@@ -1,6 +1,6 @@
 {
  "title": "How to Track WPForms in GTM With Clean Enhanced Conversions Data",
- "intro": "<p>WPForms has an odd way of naming things. Look at a lead's data in the browser and the email field isn't called email. It's <code>wpforms[fields][1]</code>. The next field is <code>wpforms[fields][2]</code>, and the numbers change from form to form.</p><p>That was the problem on a client's WordPress site where every lead came through WPForms. To send Enhanced Conversions data, I needed to know which field was which, on any form, without keeping a map. So the listener reads the label the visitor sees instead.</p><p>This walkthrough shows that setup, using the client's real container with the names removed.</p>",
+ "intro": "<p>WPForms has an odd way of naming things. Look at a lead's data in the browser and the email field isn't called email. It's <code>wpforms[fields][1]</code>. The next field is <code>wpforms[fields][2]</code>, and the numbers change from form to form.</p><p>That was the problem on a client's WordPress site where every lead came through WPForms. To send Enhanced Conversions (a Google Ads feature that uses a lead's contact details to match them to ad clicks) data, I needed to know which field was which, on any form, without keeping a map. So the listener reads the label the visitor sees instead.</p><p>This walkthrough shows that setup, using the client's real container with the names removed.</p>",
  "tldr": "<p>This free script counts a WPForms lead only when the form confirms it, however the form finishes. It finds the name, email and phone by their field labels, so the details stay clean on any form. Send one test lead before going live.</p>",
  "sections": [
   [
@@ -9,11 +9,11 @@
   ],
   [
    "Step 1: Add the listener tag",
-   "<ol><li><a class=\"uft-download\" href=\"https://iyrexmedia.com/wp-content/uploads/gtm-form-listeners/wpforms-form-tracker-v3.3.0.gtm.txt\" download>Download the GTM tag</a>, or get it from <a href=\"https://github.com/Iyke76/wpforms-gtm-form-tracker\" target=\"_blank\" rel=\"noopener\">GitHub</a>.</li><li>Create a <strong>Custom HTML</strong> tag and paste it. The wrapper and config are included.</li><li>Fire it on <strong>All Pages</strong>, so it can also finish the job on a thank-you page.</li></ol>[[img:wpf-listener-tag|The tag on the client's container, which runs an earlier v3 build. The download is v3.3.0.]]<p>The defaults are safe to leave. Set <code>debug: true</code> only while testing. If the site runs another form tool too, use the <a href=\"https://iyrexmedia.com/universal-gtm-form-tracking-listener/\">universal listener</a> instead, and never both.</p>"
+   "<ol><li><a class=\"uft-download\" href=\"https://iyrexmedia.com/wp-content/uploads/gtm-form-listeners/wpforms-form-tracker-v3.3.0.gtm.txt\" download>Download the GTM tag</a>, or get it from <a href=\"https://github.com/Iyke76/wpforms-gtm-form-tracker\" target=\"_blank\" rel=\"noopener\">GitHub</a>.</li><li>Create a <strong>Custom HTML</strong> (the GTM option for pasting in a script) tag and paste it. The wrapper and config are included.</li><li>Fire it on <strong>All Pages</strong>, so it can also finish the job on a thank-you page.</li></ol>[[img:wpf-listener-tag|The tag on the client's container, which runs an earlier v3 build. The download is v3.3.0.]]<p>The defaults are safe to leave. Set <code>debug: true</code> only while testing. If the site runs another form tool too, use the <a href=\"https://iyrexmedia.com/universal-gtm-form-tracking-listener/\">universal listener</a> instead, and never both.</p>"
   ],
   [
    "Step 2: Create the trigger",
-   "<p>Go to <strong>Triggers &gt; New &gt; Custom Event</strong> and use <code>wpforms_form_success</code>. On this site, every lead tag hangs off that one trigger.</p>[[img:wpf-trigger|One trigger, used by GA4, Google Ads and an OpenAI Ads pixel.]]"
+   "<p>Go to <strong>Triggers &gt; New &gt; Custom Event</strong> and use <code>wpforms_form_success</code>. On this site, every lead tag hangs off that one trigger (the rule that tells a tag when to run).</p>[[img:wpf-trigger|One trigger, used by GA4, Google Ads and an OpenAI Ads pixel.]]"
   ],
   [
    "Step 3: Send it to GA4 and Google Ads",
@@ -25,7 +25,7 @@
   ],
   [
    "Step 5: Test, then publish",
-   "<ol><li>In <strong>Preview</strong>, load a form page and expect <code>ec_tracker_initialized</code>.</li><li>Submit with a required field empty. Expect <code>wpforms_form_failed</code>.</li><li>Submit a labelled test lead. Expect one <code>wpforms_form_success</code>.</li><li>Open that event and read <code>ec_email</code>, <code>ec_phone</code> and the name fields.</li><li>Refresh the confirmation page. Expect nothing new.</li></ol><p>To see consent state, attached forms and the last event, run:</p><pre><code>window._ecFormTrackers.wpforms.status()</code></pre><p>Then remove any older click or thank-you conversions for the same form, and publish. Here's the finished setup:</p>[[img:wpf-tag-list|One listener with GA4, Google Ads and other platforms working from its event. IDs anonymised.]]"
+   "<ol><li>In <strong>Preview</strong> (GTM's test mode), load a form page and expect <code>ec_tracker_initialized</code>.</li><li>Submit with a required field empty. Expect <code>wpforms_form_failed</code>.</li><li>Submit a labelled test lead. Expect one <code>wpforms_form_success</code>.</li><li>Open that event and read <code>ec_email</code>, <code>ec_phone</code> and the name fields.</li><li>Refresh the confirmation page. Expect nothing new.</li></ol><p>To see consent state, attached forms and the last event, run:</p><pre><code>window._ecFormTrackers.wpforms.status()</code></pre><p>Then remove any older click or thank-you conversions for the same form, and publish. Here's the finished setup:</p>[[img:wpf-tag-list|One listener with GA4, Google Ads and other platforms working from its event. IDs anonymised.]]"
   ],
   [
    "What to know",
@@ -36,5 +36,6 @@
    "<h3>Can GTM's built-in Form Submission trigger track WPForms?</h3><p>It can fire, but not reliably on every confirmation type. AJAX forms often don't produce a standard submit, and a submit event doesn't prove the entry was accepted. The listener waits for WPForms' own confirmation.</p><h3>Does this send WPForms leads to Google Ads?</h3><p>Yes. Put your Google Ads conversion tag on <code>wpforms_form_success</code>, and map the <code>ec_*</code> keys for Enhanced Conversions.</p>"
   ]
  ],
- "closing": "<p>If you'd rather have this installed and checked for you, I can help.</p>"
+ "closing": "<p>If you'd rather have this installed and checked for you, I can help.</p>",
+ "business": "<p>If your site uses WPForms, this helps you trust your lead numbers. It counts a lead once the form confirms it, not when someone clicks a button. Because it finds each field by its label, the lead's contact details reach Google Ads correctly on any form.</p><p>The steps below are for whoever installs it, so you can hand this page to your developer or marketer.</p>"
 }
