@@ -30,6 +30,10 @@
   [
    "What to know",
    "<ul><li>The client's container runs an earlier v3 build, and I didn't place a new test lead for this post. Test v3.3.0 on your own forms.</li><li>Without jQuery on the page, AJAX success relies on the confirmation container appearing.</li><li>A redirect to another domain can't use the saved data.</li><li>Bot or spam submissions that pass WPForms' validation still count.</li></ul><p>It's free, MIT licensed and <a href=\"https://github.com/Iyke76/wpforms-gtm-form-tracker\" target=\"_blank\" rel=\"noopener\">on GitHub</a>.</p>"
+  ],
+  [
+   "Frequently asked questions",
+   "<h3>Can GTM's built-in Form Submission trigger track WPForms?</h3><p>It can fire, but not reliably on every confirmation type. AJAX forms often don't produce a standard submit, and a submit event doesn't prove the entry was accepted. The listener waits for WPForms' own confirmation.</p><h3>Does this send WPForms leads to Google Ads?</h3><p>Yes. Put your Google Ads conversion tag on <code>wpforms_form_success</code>, and map the <code>ec_*</code> keys for Enhanced Conversions.</p>"
   ]
  ],
  "closing": "<p>If you'd rather have this installed and checked for you, I can help.</p>"
