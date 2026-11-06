@@ -1,7 +1,7 @@
 {
  "title": "How to Track WPForms in GTM With Clean Enhanced Conversions Data",
  "intro": "<p>WPForms has an odd way of naming things. Look at a lead's data in the browser and the email field isn't called email. It's <code>wpforms[fields][1]</code>. The next field is <code>wpforms[fields][2]</code>, and the numbers change from form to form.</p><p>That was the problem on a client's WordPress site where every lead came through WPForms. To send Enhanced Conversions data, I needed to know which field was which, on any form, without keeping a map. So the listener reads the label the visitor sees instead.</p><p>This walkthrough shows that setup, using the client's real container with the names removed.</p>",
- "tldr": "<p>Add one free Custom HTML tag and trigger on <code>wpforms_form_success</code>. It handles AJAX forms, page reloads and thank-you redirects, and reads fields by their visible labels. Send form details to GA4 and the normalized contact fields to Enhanced Conversions, then check the values in Preview.</p>",
+ "tldr": "<p>This free script counts a WPForms lead only when the form confirms it, however the form finishes. It finds the name, email and phone by their field labels, so the details stay clean on any form. Send one test lead before going live.</p>",
  "sections": [
   [
    "Why a click or thank-you trigger isn't enough",
