@@ -17,7 +17,7 @@
   ],
   [
    "Step 3: Send it to GA4 and Google Ads",
-   "<p>Create a <strong>GA4 Event</strong> tag on the trigger, with <code>form_id</code>, <code>form_cta</code> and <code>form_platform</code> as parameters. Keep the <code>ec_*</code> contact fields out of it, because GA4's terms prohibit personal data.</p><p>Then add a <strong>Google Ads Conversion Tracking</strong> tag on the same trigger, with a Conversion Linker on all pages.</p>[[img:wpf-gads-tag|The website lead conversion. Label hidden.]]"
+   "<p>Create a <strong>GA4 Event</strong> tag on the trigger, with <code>form_id</code>, <code>form_cta</code> and <code>form_platform</code> as parameters. Keep the <code>ec_*</code> contact fields out of it, because GA4's terms prohibit personal data.</p><p>Then add a <strong>Google Ads Conversion Tracking</strong> tag on the same trigger, with a Conversion Linker on all pages.</p>[[img:wpf-gads-tag|The website lead conversion. Label hidden.]]<p><strong>Want these in reports?</strong> GA4 won't show them until you register each one as a custom dimension. <a href=\"https://iyrexmedia.com/gravity-forms-gtm-tracking/#ga4-dimensions\">Here's how</a>.</p>"
   ],
   [
    "Step 4: Map the contact fields",
